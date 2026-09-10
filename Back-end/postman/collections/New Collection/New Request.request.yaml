@@ -1,0 +1,30 @@
+$kind: http-request
+url: ""
+method: GET
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Status code is 200", function () {
+          pm.response.to.have.status(200);
+      });
+
+      pm.test("Response content-type is application/json", function () {
+          pm.response.to.have.header("Content-Type", "application/json; charset=utf-8");
+      });
+
+      pm.test("Response is an array", function () {
+          const jsonData = pm.response.json();
+          pm.expect(jsonData).to.be.an('array');
+      });
+
+      pm.test("Response contains expected fields in items", function () {
+          const jsonData = pm.response.json();
+          if (jsonData.length > 0) {
+              pm.expect(jsonData[0]).to.have.property('_id');
+              pm.expect(jsonData[0]).to.have.property('customerName');
+              pm.expect(jsonData[0]).to.have.property('service');
+              pm.expect(jsonData[0]).to.have.property('status');
+          }
+      });
+examples: .resources/New Request.resources/examples
+order: 4148905310150932

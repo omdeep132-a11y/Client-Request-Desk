@@ -1,0 +1,33 @@
+$kind: http-example
+request:
+  url: http://localhost:3000/api/requests
+  method: GET
+  body:
+    type: json
+    content: '{ "email": "alice@acme.test" }'
+response:
+  statusCode: 404
+  statusText: Not Found
+  headers:
+    x-powered-by: Express
+    content-security-policy: default-src 'none'
+    x-content-type-options: nosniff
+    content-type: text/html; charset=utf-8
+    content-length: "154"
+    date: Thu, 10 Sep 2026 11:10:47 GMT
+    connection: keep-alive
+    keep-alive: timeout=5
+  body:
+    type: html
+    content: |
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+      <meta charset="utf-8">
+      <title>Error</title>
+      </head>
+      <body>
+      <pre>Cannot POST /api/auth/login</pre>
+      </body>
+      </html>
+order: 1789038729660
