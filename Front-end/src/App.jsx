@@ -5,6 +5,7 @@ import LoginPage from "./pages/LoginPage";
 import RequestListPage from "./pages/RequestListPage";
 import RequestCreatePage from "./pages/RequestCreatePage";
 import RequestDetailPage from "./pages/RequestDetailPage";
+import RequestEditPage from "./pages/RequestEditPage";
 
 function ProtectedLayout({ children }) {
   const { user, loading } = useAuth();
@@ -43,6 +44,14 @@ export default function App() {
           element={
             <ProtectedLayout>
               <RequestCreatePage />
+            </ProtectedLayout>
+          }
+        />
+        <Route
+          path="/requests/:id/edit"
+          element={
+            <ProtectedLayout>
+              <RequestEditPage />
             </ProtectedLayout>
           }
         />
