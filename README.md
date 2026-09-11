@@ -166,7 +166,15 @@ Request -> routes/*.js -> middleware/auth.js -> controllers/*.js -> Models -> Mo
 
 ## Key decisions
 
-### 1. MongoDB + Mongoose instead of PostgreSQL/SQLite
+### 1. MongoDB + Mongoose instead of PostgreSQL/SQLite and JavaScript instead of TypeScript
+
+The spec lists TypeScript as preferred, with equivalent choices acceptable when explained.
+
+Why JavaScript: I'm comfortable and fast in JavaScript, and haven't worked with TypeScript in a real project yet. Given the 6–8 hour timeframe, I chose to build in JS so I could focus my time on getting the core logic right — workspace isolation, safe conversion handling, and test coverage — rather than learning TypeScript syntax under time pressure.
+
+Trade-off: no compile-time type safety. A couple of bugs during development (like a model not being registered before .populate() was called, and a frontend/backend field name mismatch) were only caught at runtime or through manual testing in Postman, where TypeScript would likely have caught them earlier.
+
+What I'd do next: TypeScript is on my list to learn. I'd start by typing the Mongoose models and API request/response shapes, since that's where I'd get the most value — catching field mismatches between frontend and backend at compile time instead of manually checking in Postman.
 
 The spec allows equivalent stacks "when explained."
 
@@ -424,6 +432,24 @@ Run with `npm test` in each folder.
 | Install/dev/test/build commands | This README |
 
 ---
+
+## AI tools used 
+
+I used Claude (via chat) as a pairing partner and code reviewer throughout development, not as an autonomous coder.
+
+Specific uses:
+
+Debugging runtime errors (e.g. MissingSchemaError caused by a model not being registered before .populate())
+Explaining trade-offs before I committed to them (why a unique DB index beats check-then-insert for duplicate prevention; why 404 is safer than 403 for cross-workspace access)
+Reviewing individual functions/snippets before committing, not full files at once
+Helping debug a timezone bug where dates shifted by a day due to local vs UTC parsing
+
+How I verified the output:
+
+Never committed AI-suggested code without running it myself first
+Cross-checked every frontend API call against the actual backend route and response shape using Postman
+Wrote the isolation and duplicate-conversion tests myself to independently verify the logic actually worked, rather than trusting the explanation
+Manually tested every status code path (400/401/404/409) by triggering each scenario by hand
 
 ## Repo structure at a glance
 
